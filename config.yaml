@@ -1,0 +1,22 @@
+# configuration file for reivew analysis
+path:
+    # review data from from http://jmcauley.ucsd.edu/data/amazon/index.html
+    #   there are much larger sets and you're free to experiment on your own!
+    # R. He, J. McAuley. "Modeling the visual evolution of fashion trends
+    #    with one-class collaborative filtering." WWW, 2016
+    # J. McAuley, C. Targett, J. Shi, A. van den Hengel. "Image-based
+    #     recommendations on styles and substitutes". SIGIR, 2015
+    # http://snap.stanford.edu/data/amazon/productGraph/categoryFiles/
+    raw: data/reviews_Office_Products_10.json.gz # reviews_Amazon_Instant_Video_5.json.gz (alternate)
+    metadata: data/meta_Office_Products.json.gz # meta_Amazon_Instant_Video.json.gz (alterate)
+    example: data/review_train_example.csv  # substitute as x or y
+    etl: data/review_data_etl.pkl.gz # transformed features
+    model: data/review_transform_model.pkl  # ETL options for new data
+    embedding: data/review_embedding_model.pkl  
+
+# configuration options for part 0, ETL
+partition:
+    test: 0.2   # train=80%, test=20%
+    validation: 0.2   # train_all=80%, train_validation=20%
+encoding:
+    max_text_terms: 500  # number of features for simple TF/IDF tokenization

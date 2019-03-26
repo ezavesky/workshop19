@@ -9,14 +9,23 @@ path:
     # http://snap.stanford.edu/data/amazon/productGraph/categoryFiles/
     raw: data/reviews_Office_Products_10.json.gz # reviews_Amazon_Instant_Video_5.json.gz (alternate)
     metadata: data/meta_Office_Products.json.gz # meta_Amazon_Instant_Video.json.gz (alterate)
-    example: data/review_train_example.csv  # substitute as x or y
-    etl: data/review_data_etl.pkl.gz # transformed features
-    model: data/review_transform_model.pkl  # ETL options for new data
-    embedding: data/review_embedding_model.pkl  
+    example: data/data_train_example.csv  # substitute as x or y
+    etl: data/data_etl.pkl.gz # transformed features
+    model_preproc: data/model_preproc.pkl.gz  # ETL options for new data
+    model_classifier: data/model_classifier.pkl.gz  # classifiers for ananlysis
+    model_embedding: data/model_embedding.pkl.gz
 
 # configuration options for part 0, ETL
 partition:
     test: 0.2   # train=80%, test=20%
     validation: 0.2   # train_all=80%, train_validation=20%
 encoding:
-    max_text_terms: 500  # number of features for simple TF/IDF tokenization
+    max_text_terms: 300  # number of features for simple TF/IDF tokenization
+    
+# configuration for baseline
+training:
+    scoring: [average_precision, f1_micro, f1_macro, roc_auc, accuracy]   # many scoring metrics, FIRST is the "best" scoring
+    threads: 2
+    cross_validate: False
+    model_type: rf  # look at `baseline` script, can be one of: rf, bayes, gbm
+

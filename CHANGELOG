@@ -1,0 +1,6 @@
+# Review Processing - ML Workshop
+
+## 0.1
+
+### 0.1.1
+- Initial software creation with baseline performance of 0.879 AUC with a random forest

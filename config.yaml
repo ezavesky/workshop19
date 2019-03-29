@@ -33,6 +33,7 @@ training:
 publish:
     api_token: your-user-token-code
     name_model2: model2b-review-text
+    name_model3: model3-setiment-ex
     url_model: http://acumosr-test.research.att.com:8090/onboarding-app/v2/models    # to the workshop instance
 #     url_model: http://acumos.research.att.com:8090/onboarding-app/v2/models    # to a "production" instance
     url_auth: http://acumosr-test.research.att.com:8090/onboarding-app/v2/auth    # to the workshop instance
@@ -41,6 +42,12 @@ publish:
 # configuration calling sentiment models
 sentiment:
     deploy_host: "http://acumos-gpu.research.att.com"
+    active_model: [mobility]    # can hold multiple active models
+    port_twitter: 8764
+    port_yelp: 8760
+    port_mobility: 8761
+    port_dtv: 8762
+    port_care: 8763
     
     
     

@@ -1,6 +1,7 @@
 # Review Processing - ML Workshop
 
 ## 03/28/19
+- add scripts for calling wrapped and remote models
 - initial creation and upload of scripts
   - basic environment configuration, simple model, data ETL, basline sharing
   - data description and linkage to other resources

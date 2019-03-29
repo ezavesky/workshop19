@@ -13,7 +13,8 @@ path:
     etl: data/data_etl.pkl.gz # transformed features
     model_preproc: data/model_preproc.pkl.gz  # ETL options for new data
     model_classifier: data/model_classifier.pkl.gz  # classifiers for ananlysis
-    model_embedding: data/model_embedding.pkl.gz
+    sentiment: data/data_etl_sentiment.pkl.gz  # sentiment scores aligned with ETL samples
+    model_fused: data/model_classifier_fused.pkl.gz  # classifiers for fused analysis
 
 # configuration options for part 0, ETL
 partition:
@@ -22,14 +23,14 @@ partition:
 encoding:
     max_text_terms: 300  # number of features for simple TF/IDF tokenization
     
-# configuration for baseline - part 1
+# configuration for baseline - model2
 training:
     scoring: [average_precision, f1_micro, f1_macro, roc_auc, accuracy]   # many scoring metrics, FIRST is the "best" scoring
     threads: 2
     cross_validate: False
     model_type: rf  # look at `baseline` script, can be one of: rf, bayes, gbm
 
-# configuration for wrapping of models - part 2
+# configuration for wrapping of models - model2+ model3
 publish:
     api_token: your-user-token-code
     name_model2: model2b-review-text
@@ -39,7 +40,7 @@ publish:
     url_auth: http://acumosr-test.research.att.com:8090/onboarding-app/v2/auth    # to the workshop instance
 #     url_auth: http://acumos.research.att.com:8090/onboarding-app/v2/auth    # to a "production" instance
 
-# configuration calling sentiment models
+# configuration calling sentiment models - model 3
 sentiment:
     deploy_host: "http://acumos-gpu.research.att.com"
     active_model: [mobility]    # can hold multiple active models

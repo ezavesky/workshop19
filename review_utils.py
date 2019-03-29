@@ -20,6 +20,11 @@ from sklearn import metrics # metric plotting
 from matplotlib import pyplot as plt
 from sklearn import preprocessing  # data ETL
 
+# What's the deal with this script!?
+
+# When you want to re-use functionality, you can make a package, a library, or just another importable script. 
+# We chose the latter solution here to keep it simple yet allow quick imports into other notebooks for 
+# easy display of results in those respective environments.
 
 ## Performance Evaluation
 # This quick function will plot the performance of our algorithm by finding the [area under the curve (aka ROC)](https://en.wikipedia.org/wiki/Receiver_operating_characteristic) for a simple [RandomForestClassifier](https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html) and compare it to a [GradientBoostedClassifier](https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.GradientBoostingClassifier.html#sklearn.ensemble.GradientBoostingClassifier). We can use the returned value (the `micro auc`) to more easily compare the performance of different models that we build.  It should be noted that no tuning for either model was done, so it doesn't speak to the overall fitness of one type versus another.

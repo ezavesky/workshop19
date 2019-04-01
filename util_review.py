@@ -32,37 +32,46 @@ from sklearn import preprocessing  # data ETL
 
 # Compute ROC curve and ROC area for each class
 # example from sklearn code: https://scikit-learn.org/stable/auto_examples/model_selection/plot_roc.html
-def draw_roc(classifier, X_test, y_test, title_str="ROC Curves"):
-    y_score = classifier.predict_proba(X_test)
+def draw_roc(X_test, y_test, y_predict=None, title="ROC Curves", classifier=None):
     fpr = dict()
     tpr = dict()
     roc_auc = dict()
+
+    if classifier is not None:
+        y_predict = classifier.predict_proba(X_test)
+        class_set = classifier.classes_
+    else:
+        class_set = list(set(y_test))
+        print(class_set)
+        print(y_predict)
+    max_class = len(class_set)
     
     # this looks complicated, but we're making sure we have one column per class
-    max_class = classifier.n_classes_
     if len(y_test.shape)==1 or y_test.shape[1]==1:
-        y_test = preprocessing.OneHotEncoder(sparse=False, categories='auto') \
-                            .fit_transform(y_test.values.reshape(-1, 1)).astype(float)
+        enc = preprocessing.OneHotEncoder(sparse=False, categories='auto')
+        y_test =  enc.fit_transform(y_test.values.reshape(-1, 1)).astype(float)
+        class_set = enc.categories_[0] # just one set of classes learned
     # for each class, compute the line
-    for i in range(classifier.n_classes_):
-        fpr[i], tpr[i], _ = metrics.roc_curve(y_test[:, i], y_score[:, i])
+    for i in range(max_class):
+        fpr[i], tpr[i], _ = metrics.roc_curve(y_test[:, i], y_predict[:, i])
         roc_auc[i] = metrics.auc(fpr[i], tpr[i])
+    print(class_set)
 
     # Compute micro-average ROC curve and ROC area
-    fpr["micro"], tpr["micro"], _ = metrics.roc_curve(y_test.ravel(), y_score.ravel())
+    fpr["micro"], tpr["micro"], _ = metrics.roc_curve(y_test.ravel(), y_predict.ravel())
     roc_auc["micro"] = metrics.auc(fpr["micro"], tpr["micro"])
 
     plt.figure()
     lw = 2
-    for i in range(classifier.n_classes_):
+    for i in range(max_class):
         plt.plot(fpr[i], tpr[i],
-                 lw=lw, label='ROC curve (class {}, area = {:.2f})'.format(i, roc_auc[i]))
+                 lw=lw, label='ROC curve (class {}, area = {:.2f})'.format(class_set[i], roc_auc[i]))
     plt.plot([0, 1], [0, 1], color='navy', lw=lw, linestyle='--')
     plt.xlim([0.0, 1.0])
     plt.ylim([0.0, 1.05])
     plt.xlabel('False Positive Rate')
     plt.ylabel('True Positive Rate')
-    plt.title(title_str)
+    plt.title(title)
     plt.legend(loc="lower right")
     plt.show()
     return roc_auc["micro"]

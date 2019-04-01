@@ -1,5 +1,11 @@
 # Review Processing - ML Workshop
 
+## 03/31/19
+- rename some scripts, populate remote call function
+- added verbosity string to preprocessing functions
+- fix call utility script for local and remote (via requests) calls
+- update performance plotting to not need a model
+
 ## 03/28/19
 - add scripts for calling wrapped and remote models
 - initial creation and upload of scripts

@@ -83,7 +83,6 @@ def score_model(wrapped_model, item_values=[], verbose=False, url_remote=None, v
             # print("----------- pb_msg -----------")
             # print(wrapped_model.classify.from_pb_msg)
             resp_wrap = obj_func.from_pb_msg(trans_in_pb)
-            print(resp_wrap)
             dict_res = resp_wrap.as_dict()
             # print(resp)
         else:   # go to a remote URL

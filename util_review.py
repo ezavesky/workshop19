@@ -42,20 +42,18 @@ def draw_roc(X_test, y_test, y_predict=None, title="ROC Curves", classifier=None
         class_set = classifier.classes_
     else:
         class_set = list(set(y_test))
-        print(class_set)
-        print(y_predict)
-    max_class = len(class_set)
     
     # this looks complicated, but we're making sure we have one column per class
     if len(y_test.shape)==1 or y_test.shape[1]==1:
         enc = preprocessing.OneHotEncoder(sparse=False, categories='auto')
         y_test =  enc.fit_transform(y_test.values.reshape(-1, 1)).astype(float)
         class_set = enc.categories_[0] # just one set of classes learned
+    max_class = len(class_set)
+    
     # for each class, compute the line
     for i in range(max_class):
         fpr[i], tpr[i], _ = metrics.roc_curve(y_test[:, i], y_predict[:, i])
         roc_auc[i] = metrics.auc(fpr[i], tpr[i])
-    print(class_set)
 
     # Compute micro-average ROC curve and ROC area
     fpr["micro"], tpr["micro"], _ = metrics.roc_curve(y_test.ravel(), y_predict.ravel())

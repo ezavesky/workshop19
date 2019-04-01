@@ -1,5 +1,9 @@
 # Review Processing - ML Workshop
 
+## 04/01/19
+- improve classification and scoring demo (notebook F)
+- improve utility classes for detected faults
+
 ## 03/31/19
 - rename some scripts, populate remote call function
 - added verbosity string to preprocessing functions

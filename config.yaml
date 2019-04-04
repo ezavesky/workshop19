@@ -43,12 +43,38 @@ publish:
 # configuration calling sentiment models - model 3
 sentiment:
     deploy_host: "http://acumos-gpu.research.att.com"
-    active_model: [mobility]    # can hold multiple active models
-    port_twitter: 8764
-    port_yelp: 8760
-    port_mobility: 8761
-    port_dtv: 8762
-    port_care: 8763
+    active_model: [yelp, care, twitter]    # can hold multiple active models
+    twitter:
+        port: 8764
+        path: data/sentiment_etl_twitter.csv.gz
+        ref: http://acumos.research.att.com/index.html#/marketSolutions?solutionId=58d34454-ff82-4ce0-aee0-8ffde3600f5c&revisionId=32ddae2a-d8e0-4d9b-8c86-ed796b2616c4%23md-model-detail-template#md-model-detail-template
+        api: sent_predict
+        style: text-to-float
+    yelp:
+        port: 8760
+        path: data/sentiment_etl_yelp.csv.gz
+        ref: http://acumos.research.att.com/index.html#/marketSolutions?solutionId=ff468e3c-86da-412d-88cb-8c816f2ac27f&revisionId=c9c89cda-3748-4e73-9502-f9cf161ab107#md-model-detail-template
+        api: sent_predict
+        style: text-to-float  # string input, multiple float output
+    mobility:
+        port: 8761
+        path: data/sentiment_etl_mobility.csv.gz
+        ref: http://acumos.research.att.com/index.html#/marketSolutions?solutionId=e9b0463c-fd2a-48ef-babd-1c1b188f820f&revisionId=2ad76136-ad2e-48aa-887c-df043f382f2c#md-model-detail-template
+        api: sent_predict
+        style: text-to-float  # string input, multiple float output
+    dtv: 
+        port: 8762
+        ref: http://acumos.research.att.com/index.html#/marketSolutions?solutionId=642d31e6-2e29-4cc7-9ae9-2f574ccc6f5a&revisionId=5e204277-b2c4-4342-83b6-804f09fc9bfa%23md-model-detail-template#md-model-detail-template
+        api: sent_predict
+        style: text-to-float  # string input, multiple float output
+        path: data/sentiment_etl_dtv.csv.gz
+    care:
+        port: 8763
+        path: data/sentiment_etl_care.csv.gz
+        ref: http://acumos.research.att.com/index.html#/marketSolutions?solutionId=ff6581b1-30d5-49f8-8962-0e42865ddd33&revisionId=26dfddd6-a345-4749-8a79-e278f779c5ab%23md-model-detail-template#md-model-detail-template
+        api: classify
+        style: text-to-float  # string input, multiple float output
+        
     
     
     

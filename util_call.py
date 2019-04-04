@@ -55,9 +55,9 @@ def score_model(wrapped_model, item_values=[], verbose=False, url_remote=None, v
     res_list = []
     for i in range(len(item_values)):
         x = item_values[i]
+        #print("----------- x -----------")
+        #print(*x)
         trans_in = TransIn(*x)   # transform from raw dict/list item into format
-        # print("----------- x -----------")
-        # print(*x)
         # print("----------- trans_in -----------")
         # print(trans_in)
 
@@ -78,7 +78,7 @@ def score_model(wrapped_model, item_values=[], verbose=False, url_remote=None, v
         # trans_out_json = MessageToJson(trans_out_pb, indent=0)
         # if verbose and i==0:
         #      print(trans_in_dict)
-        
+        dict_res = None
         if url_remote is None:   # no where to go
             # print("----------- pb_msg -----------")
             # print(wrapped_model.classify.from_pb_msg)
@@ -89,12 +89,22 @@ def score_model(wrapped_model, item_values=[], verbose=False, url_remote=None, v
             resp = None
             # url = self.resolve_method(method_name)
             resp_data = requests.post("{}/{}".format(url_remote, name_function), data=trans_in_pb_bytes)
-            resp_data.raise_for_status()
+            try:
+                resp_data.raise_for_status()
+            except Exception as e:
+                resp_data = None
+                print("Output error ({}), exception ({})".format(url_remote, e))
+            
             # print("----------- from_pb_bytes -----------")
             # print(wrapped_model.classify.from_pb_bytes)
-            resp = TransOutPb.FromString(resp_data.content)
-            dict_res = MessageToDict(resp)
-        res_list.append(dict_res)
+            if resp_data is not None:
+                try:
+                    resp = TransOutPb.FromString(resp_data.content)
+                    dict_res = MessageToDict(resp)
+                except Exception as e:
+                    print("Output error ({}), exception ({})".format(url_remote, e))
+        if dict_res is not None:
+            res_list.append(dict_res)
         if (i % 250)==0 and i>0:
             print("Sample {}...".format(i))
 
@@ -111,7 +121,7 @@ def main(config={}):
         description='a wrapped model caller',
         epilog="Call to execute a single review sample or a textual sample \n" \
                 "  (review)   python util_call.py -m data/model -u \"http://localhost:8884\"\n" \
-                "    (text)   python util_call.py -t -m data/model2 -u \"http://localhost:8884\"\n ")
+                "    (text)   python util_call.py -t -m data/model3-setiment-ex_text-to-float -u \"http://acumos-gpu.research.att.com:8760\" -n sent_predict\n ")
     submain = parser.add_argument_group('main execution and evaluation functionality')
     submain.add_argument('-m', '--model_path', type=str, default='data/model2b-review-text', help="path to dumped model (for protobuf definitions)")
     submain.add_argument('-u', '--url_host', type=str, default=None, help="URL to target model (without function url, e.g. http://localhost:8884)")
@@ -127,14 +137,15 @@ def main(config={}):
     
     # create data frame
     if config['text_only']:
-        X = [["I didn't like it much. It was such a rubbery item"]]
+        X = [["I didn't like it much. It was such a rubbery item"], ["that was fantastic!"], ["perfect"]]
     else:
         X = [[[0,0], "I've had better", "not much", int(time.time()), ["office products"], "rubbery item"]]
     print("----- Dataframe -------")
     print(X)
         
     # score model with sample dataframe
-    res_list = score_model(wrapped_model, X, config['version_updated'], config['url_host'], config['function_name']) #, )
+    res_list = score_model(wrapped_model, X, config['version_updated'], 
+                           url_remote=config['url_host'], name_function=config['function_name']) #, )
     print("----- Result -------")
     print(res_list)
     

@@ -2,7 +2,9 @@
 
 ## 04/01/19
 - improve classification and scoring demo (notebook F)
+- improve multi-sentiment classification demo (notebook G)
 - improve utility classes for detected faults
+- add some fault tolerance to call script (for URL/request errors)
 
 ## 03/31/19
 - rename some scripts, populate remote call function

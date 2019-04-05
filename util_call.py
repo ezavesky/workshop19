@@ -53,6 +53,7 @@ def score_model(wrapped_model, item_values=[], verbose=False, url_remote=None, v
     time_start = time.time()
 
     res_list = []
+    res_idx = []
     for i in range(len(item_values)):
         x = item_values[i]
         #print("----------- x -----------")
@@ -105,6 +106,7 @@ def score_model(wrapped_model, item_values=[], verbose=False, url_remote=None, v
                     print("Output error ({}), exception ({})".format(url_remote, e))
         if dict_res is not None:
             res_list.append(dict_res)
+            res_idx.append(i)
         if (i % 250)==0 and i>0:
             print("Sample {}...".format(i))
 
@@ -112,7 +114,7 @@ def score_model(wrapped_model, item_values=[], verbose=False, url_remote=None, v
     if verbose:
         print("---- Help and Input Type Description ----")
         print(help(TransIn))
-    return res_list
+    return res_list, res_idx
 
 # main/reusable function
 def main(config={}):
@@ -144,7 +146,7 @@ def main(config={}):
     print(X)
         
     # score model with sample dataframe
-    res_list = score_model(wrapped_model, X, config['version_updated'], 
+    res_list, _ = score_model(wrapped_model, X, config['version_updated'], 
                            url_remote=config['url_host'], name_function=config['function_name']) #, )
     print("----- Result -------")
     print(res_list)

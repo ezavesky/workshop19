@@ -15,7 +15,6 @@ The data for this workshop was built on a number of ardously collected and maint
 
 * Primary textual description - http://jmcauley.ucsd.edu/data/amazon/index.html
 * Paper Citations
-* Primary Dataset - Amazon Instant Video - http://snap.stanford.edu/data/amazon/productGraph/categoryFiles/reviews_Amazon_Instant_Video_5.json.gz
 
 """
 R. He, J. McAuley. "Modeling the visual evolution of fashion trends with one-class collaborative filtering." WWW, 2016
@@ -24,7 +23,8 @@ J. McAuley, C. Targett, J. Shi, A. van den Hengel. "Image-based recommendations 
 
 * We also downloaded the metadata from the same site.  It is strongly recommended to grab the pre-partitioned sets of data instead of the full draw, which may be GBs.
 
-* Primary Dataset - Metadata for Amazon Instant Video - http://snap.stanford.edu/data/amazon/productGraph/categoryFiles/meta_Amazon_Instant_Video.json.gz
+* Primary Reviews for Amazon Office Products - http://snap.stanford.edu/data/amazon/productGraph/categoryFiles/reviews_Office_Products_10.json.gz
+* Primary Metadata for Amazon Office Products - http://snap.stanford.edu/data/amazon/productGraph/categoryFiles/meta_Office_Products.json.gz
 
 ## Sentiment Classification
 Sentiment models help to assign a numerical sentiment for mood, emotion, intent, etc. to text, images, etc.  In this workshop, we use a sentiment model to process the textual columns of our data in hopes of getting additional insights that improve our overall review prediction service.

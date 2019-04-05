@@ -1,5 +1,12 @@
 # Review Processing - ML Workshop
 
+## 04/04/19 
+- complete retraining with sentiment features (notebook H)
+- move scalar training process to the 'util_review' helper script
+- improve stability (index mismatches) for call script
+- test (and reduce) sentiment deployments to just those working
+- begin testing integration for final classifier build
+
 ## 04/01/19
 - improve classification and scoring demo (notebook F)
 - improve multi-sentiment classification demo (notebook G)

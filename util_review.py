@@ -16,6 +16,7 @@
 # limitations under the License.
 # ===============LICENSE_END=========================================================
 
+import pandas as pd
 from sklearn import metrics # metric plotting
 from matplotlib import pyplot as plt
 from sklearn import preprocessing  # data ETL
@@ -73,3 +74,22 @@ def draw_roc(X_test, y_test, y_predict=None, title="ROC Curves", classifier=None
     plt.legend(loc="lower right")
     plt.show()
     return roc_auc["micro"]
+
+
+# Compute a scaler and optionally show its performance
+def preproc_scaler(models, df_test, df_train=None, verbose=False):
+    if df_train is not None:
+        models["scaler"] = preprocessing.RobustScaler()
+        models["scaler"].fit(df_train)
+        df_train = pd.DataFrame(models["scaler"].transform(df_train), 
+                             index=df_train.index, columns=df_train.columns)
+        
+        # visualize the ranges of all data
+        if verbose:
+            col_show = df_train.columns[:30].append(df_train.columns[-30:])
+            ax = df_train[col_show].boxplot(figsize=(12,6), rot=90)
+            ax.set_title("Textual, Categorical, Date Features")
+            plt.show()
+    # scale the test data
+    df_test = pd.DataFrame(models["scaler"].transform(df_test), index=df_test.index, columns=df_test.columns)
+    return models, df_test

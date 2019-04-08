@@ -1,6 +1,7 @@
 # Review Processing - ML Workshop
 
 ## 04/07/19 
+- add pre-computed semantic features for more fluid notebook execution
 - move to generic index for sentiment ETL so random split doesn't matter
 - use matplot to show side-by-side comparison (notebook H)
 - break out training function into another helper (util_train)

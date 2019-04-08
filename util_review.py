@@ -32,7 +32,7 @@ from sklearn import preprocessing  # data ETL
 
 
 # Compute ROC curve and ROC area for each class
-# example from sklearn code: https://scikit-learn.org/stable/auto_examples/model_selection/plot_roc.html
+#     example from sklearn code: https://scikit-learn.org/stable/auto_examples/model_selection/plot_roc.html
 def draw_roc(X_test, y_test, y_predict=None, title="ROC Curves", classifier=None):
     fpr = dict()
     tpr = dict()
@@ -60,20 +60,20 @@ def draw_roc(X_test, y_test, y_predict=None, title="ROC Curves", classifier=None
     fpr["micro"], tpr["micro"], _ = metrics.roc_curve(y_test.ravel(), y_predict.ravel())
     roc_auc["micro"] = metrics.auc(fpr["micro"], tpr["micro"])
 
-    plt.figure()
+    fig = plt.figure(1, figsize=(6, 6))
     lw = 2
     for i in range(max_class):
-        plt.plot(fpr[i], tpr[i],
-                 lw=lw, label='ROC curve (class {}, area = {:.2f})'.format(class_set[i], roc_auc[i]))
+        ax = plt.plot(fpr[i], tpr[i],
+                 lw=lw, label='ROC curve (class {}, area = {:.3f})'.format(class_set[i], roc_auc[i]))
     plt.plot([0, 1], [0, 1], color='navy', lw=lw, linestyle='--')
     plt.xlim([0.0, 1.0])
     plt.ylim([0.0, 1.05])
     plt.xlabel('False Positive Rate')
     plt.ylabel('True Positive Rate')
-    plt.title(title)
+    plt.title(title+" (AUC {:.3f})".format(roc_auc["micro"]))
     plt.legend(loc="lower right")
     plt.show()
-    return roc_auc["micro"]
+    return roc_auc["micro"], fig
 
 
 # Compute a scaler and optionally show its performance
@@ -88,7 +88,7 @@ def preproc_scaler(models, df_test, df_train=None, verbose=False):
         if verbose:
             col_show = df_train.columns[:30].append(df_train.columns[-30:])
             ax = df_train[col_show].boxplot(figsize=(12,6), rot=90)
-            ax.set_title("Textual, Categorical, Date Features")
+            ax.set_title("Scaled Features")
             plt.show()
     # scale the test data
     df_test = pd.DataFrame(models["scaler"].transform(df_test), index=df_test.index, columns=df_test.columns)

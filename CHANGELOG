@@ -1,5 +1,11 @@
 # Review Processing - ML Workshop
 
+## 04/07/19 
+- break out training function into another helper (util_train)
+- save performance figures for easier side-by-side comparison
+- reformat the called/external sentiment features (notebook G)
+- refactor output from our shared model (notebook E+F)
+
 ## 04/04/19 
 - complete retraining with sentiment features (notebook H)
 - move scalar training process to the 'util_review' helper script

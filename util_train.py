@@ -29,7 +29,8 @@ from sklearn import model_selection
 # We chose the latter solution here to keep it simple yet allow quick imports into other notebooks for 
 #       easy display of results in those respective environments.
 
-def train_model(df_train, df_labels, scoring_list, model_type, cross_validate=False, n_threads=1):
+def train_model(df_train, df_labels, scoring_list, model_type, cross_validate=False, 
+                n_threads=1, random_state=0):
     """
     Train a model, optionally with cross validation from a set of known model types...
     :param df_train: training dataframe
@@ -47,18 +48,18 @@ def train_model(df_train, df_labels, scoring_list, model_type, cross_validate=Fa
     # first, choose our model according to specification
     if model_type.lower()=="rf":
         # use random forest as our classifier
-        models["best"] = ensemble.RandomForestClassifier(n_estimators=100)
+        models["best"] = ensemble.RandomForestClassifier(n_estimators=100, random_state=random_state)
         # create some estimator parameter set
         models["param"] = {"n_estimators":(50, 100, 200), "max_depth":(2,5)}
     elif model_type.lower()=="gbm":
         # use gradient boosting as our classifier
-        models["best"] = ensemble.GradientBoostingClassifier()
+        models["best"] = ensemble.GradientBoostingClassifier(random_state=random_state)
         # create some estimator parameter set
         models["param"] = {"n_estimators":(50, 100, 200), "max_features": (2,), "learning_rate":(0.1, 0.2)}
     elif model_type.lower()=="bayes":
         from sklearn import naive_bayes
         # use naive bayes as our classifier
-        models["best"] = naive_bayes.MultinomialNB()
+        models["best"] = naive_bayes.MultinomialNB(random_state=random_state)
         # create some estimator parameter set
         models["param"] = {"alpha":(1.0, 0.7)}
     # elif X:

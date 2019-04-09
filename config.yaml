@@ -34,7 +34,7 @@ training:
 
 # configuration for wrapping of models - model2+ model3
 publish:
-    api_token: your-user-token-code
+    api_token: # <ATTUID>:<API TOKEN> # your-user-token-code
     name_model2: model2b-review-text
     name_model3: model3-setiment-ex
     url_model: http://acumosr-test.research.att.com:8090/onboarding-app/v2/models    # to the workshop instance

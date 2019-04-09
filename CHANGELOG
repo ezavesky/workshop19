@@ -1,5 +1,8 @@
 # Review Processing - ML Workshop
 
+## 04/08/19 
+- update source for base models and additional environment steps
+
 ## 04/07/19 
 - add pre-computed semantic features for more fluid notebook execution
 - move to generic index for sentiment ETL so random split doesn't matter
